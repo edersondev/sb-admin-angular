@@ -62,13 +62,10 @@ export abstract class ResourceService<T> {
   }
 
   createOrUpdate(dataPost:any, id?:number):Observable<T>{
-    let urlRest = this.getUrlRequest();
     if(id === undefined){
-      return this._httpClient.post<T>(urlRest,dataPost)
-      .pipe(
-        catchError(this.handleError)
-      );
+      return this.create(dataPost);
     }
+    let urlRest = this.getUrlRequest();
     return this._httpClient.put<T>(`${urlRest}/${id}`,dataPost)
     .pipe(
       catchError(this.handleError)
